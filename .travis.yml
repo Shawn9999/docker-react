@@ -1,0 +1,15 @@
+language: generic 
+# each time, we need super user permission
+sudo: required
+# we need a docker preinstalled
+services:
+  - docker
+
+# series of steps before tests are run 
+before_install:
+  # to build docker image. The tag should be user/repo_name as common pratice. The tag is only used inside travis here
+  - docker build -t testReact -f Dockerfile.dev .
+
+script:
+  # - docker run testReact npm run test -- --coverage
+  - docker run -e CI=true testReact npm run test
